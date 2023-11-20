@@ -34,8 +34,8 @@ model OptionStore {
 }
 
 model ProductOptionStore {
-  optionStoreId Int          
-  productStoreId Int         
+  optionId Int          
+  productId Int         
   OptionStore   OptionStore  @relation(fields: [optionStoreId], references: [id])
   ProductStore  ProductStore @relation(fields: [productStoreId], references: [id])
   @@id([optionStoreId, productStoreId])
