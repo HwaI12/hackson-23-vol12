@@ -12,10 +12,10 @@ datasource db {
 
 model ProductStore {
   id         Int          @id @default(autoincrement())
-  accountId  String       @map("アカウントID")
-  productId  Int          @map("商品ID")
-  price      Int          @map("値段")
-  productName String      @map("商品名")
+  accountId  String       
+  productId  Int          
+  price      Int          
+  productName String      
   Account    Account      @relation(fields: [accountId], references: [id])
   Product    Product      @relation(fields: [productId], references: [id])
   OrderHistories OrderHistory[]
@@ -24,18 +24,18 @@ model ProductStore {
 
 model OptionStore {
   id           Int          @id @default(autoincrement())
-  accountId    String       @map("アカウントID")
-  optionId     Int          @map("オプションID")
-  price        Int          @map("値段")
-  optionName   String       @map("オプション名")
+  accountId    String       
+  optionId     Int          
+  price        Int          
+  optionName   String       
   Account      Account      @relation(fields: [accountId], references: [id])
   Option       Option       @relation(fields: [optionId], references: [id])
   ProductOptionStores ProductOptionStore[]
 }
 
 model ProductOptionStore {
-  optionStoreId Int          @map("オプションID")
-  productStoreId Int         @map("商品ID")
+  optionStoreId Int          
+  productStoreId Int         
   OptionStore   OptionStore  @relation(fields: [optionStoreId], references: [id])
   ProductStore  ProductStore @relation(fields: [productStoreId], references: [id])
   @@id([optionStoreId, productStoreId])
@@ -43,26 +43,26 @@ model ProductOptionStore {
 
 model Table {
   id        Int           @id @default(autoincrement())
-  tableName String        @map("テーブル名") @db.VarChar(10)
+  tableName String        @db.VarChar(10)
   OrderHistories OrderHistory[]
 }
 
 model OrderHistory {
   id          Int       @id @default(autoincrement())
-  tableId     String    @map("テーブルID")
-  productStoreId Int     @map("商品ID")
-  quantity    Int       @map("個数")
-  price       Int       @map("値段")
-  provided    Boolean   @map("提供")
+  tableId     String    @db.VarChar(10)
+  productStoreId Int     
+  quantity    Int       
+  price       Int       
+  provided    Boolean   
   Table       Table     @relation(fields: [tableId], references: [id])
   ProductStore ProductStore @relation(fields: [productStoreId], references: [id])
 }
 
 model Log {
   id           Int        @id @default(autoincrement())
-  tableName    String     @map("テーブル名")
-  productStoreId Int       @map("商品ID")
-  quantity     Int        @map("個数")
-  timeStamp    DateTime   @map("タイムスタンプ") @default(now())
+  tableName    String     @db.VarChar(20)
+  productStoreId Int       
+  quantity     Int        
+  timeStamp    DateTime   @default(now())
   ProductStore ProductStore @relation(fields: [productStoreId], references: [id])
 }
