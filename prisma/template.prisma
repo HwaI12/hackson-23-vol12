@@ -16,9 +16,9 @@ model Table {
 }
 
 model Order {
-  id          Int       @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   table       Int
-  tableId     Table     @relation(fields: [table], references: [id])
+  tableId     Table       @relation(fields: [table], references: [id])
   product     Int   
   quantity    Int       
   price       Int       
