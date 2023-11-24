@@ -2,7 +2,7 @@ const { exec } = require('child_process')
 const Fs = require("fs");
 
 export default createSchema = (accountId) => {
-    Fs.readFile("../../../prisma/template.prisma", 'utf8', (err, data) => {
+    Fs.readFile("../../prisma/template.prisma", 'utf8', (err, data) => {
         if (err) {
             console.error(err);
             return;
@@ -12,7 +12,7 @@ export default createSchema = (accountId) => {
         const modifiedData = data.replace("ACCOUNTID", accountId);
     
         // 変更した内容でファイルを上書きする
-        Fs.writeFile("../../../prisma/schema.prisma", modifiedData, 'utf8', (err) => {
+        Fs.writeFile("../../prisma/schema.prisma", modifiedData, 'utf8', (err) => {
             if (err) {
                 console.error(err);
             } else {
