@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ProductStore {
+  id         Int          @id @default(autoincrement())
+  accountId  String       
+  productId  Int          
+  price      Int          
+  productName String      
+  Account    Account      @relation(fields: [accountId], references: [id])
+  Product    Product      @relation(fields: [productId], references: [id])
+  OrderHistories OrderHistory[]
+  Logs       Log[]
+}
+
+model OptionStore {
+  id           Int          @id @default(autoincrement())
+  accountId    String       
+  optionId     Int          
+  price        Int          
+  optionName   String       
+  Account      Account      @relation(fields: [accountId], references: [id])
+  Option       Option       @relation(fields: [optionId], references: [id])
+  ProductOptionStores ProductOptionStore[]
+}
+
+model ProductOptionStore {
+  optionId Int          
+  productId Int         
+  OptionStore   OptionStore  @relation(fields: [optionStoreId], references: [id])
+  ProductStore  ProductStore @relation(fields: [productStoreId], references: [id])
+  @@id([optionStoreId, productStoreId])
+}
+
+model Table {
+  id        Int           @id @default(autoincrement())
+  tableName String        @db.VarChar(10)
+  OrderHistories OrderHistory[]
+}
+
+model OrderHistory {
+  id          Int       @id @default(autoincrement())
+  tableId     String    @db.VarChar(10)
+  productStoreId Int     
+  quantity    Int       
+  price       Int       
+  provided    Boolean   
+  Table       Table     @relation(fields: [tableId], references: [id])
+  ProductStore ProductStore @relation(fields: [productStoreId], references: [id])
+}
+
+model Log {
+  id           Int        @id @default(autoincrement())
+  tableName    String     @db.VarChar(20)
+  productStoreId Int       
+  quantity     Int        
+  timeStamp    DateTime   @default(now())
+  ProductStore ProductStore @relation(fields: [productStoreId], references: [id])
+}
