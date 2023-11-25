@@ -19,7 +19,8 @@ model Order {
   id          Int         @id @default(autoincrement())
   table       Int
   tableId     Table       @relation(fields: [table], references: [id])
-  product     Int   
+  product     Int
+  productId   Product     @relation(fields: [product], references: [id])
   quantity    Int       
   price       Int       
   provided    Boolean
@@ -27,7 +28,7 @@ model Order {
 
 model Product{
   id          Int         @id @default(autoincrement())
-  name        String
+  name        String      @unique
   price       Int
-  image       String
+  order     Order[]
 }
