@@ -1,8 +1,8 @@
 const { exec } = require('child_process')
 const Fs = require("fs");
 
-export default createSchema = (accountId) => {
-    Fs.readFile("../../prisma/template.prisma", 'utf8', (err, data) => {
+createSchema = (accountId) => {
+    Fs.readFile("./prisma/template.prisma", 'utf8', (err, data) => {
         if (err) {
             console.error(err);
             return;
@@ -12,7 +12,7 @@ export default createSchema = (accountId) => {
         const modifiedData = data.replace("ACCOUNTID", accountId);
     
         // 変更した内容でファイルを上書きする
-        Fs.writeFile("../../prisma/schema.prisma", modifiedData, 'utf8', (err) => {
+        Fs.writeFile(`./prisma/models/${accountId}.prisma`, modifiedData, 'utf8', (err) => {
             if (err) {
                 console.error(err);
             } else {
@@ -21,11 +21,25 @@ export default createSchema = (accountId) => {
         });
     });
 
-    exec(`npx prisma migrate dev --name ${accountId}`, (err, stdout, stderr) => {
+    // マイグレーションファイルを作成する
+    exec(`npx prisma migrate dev --name ${accountId} --schema prisma/models/${accountId}.prisma`, 
+            (err, stdout, stderr) => {
         if (err) {
-            console.log(`stderr: ${stderr}`)
+            console.error(err)
         }
-            console.log(`stdout: ${stdout}`)
+            console.log(stdout)
+        }
+    );
+
+    // モデルを作成する
+    exec(`npx prisma generate --schema prisma/models/${accountId}.prisma`, 
+            (err, stdout, stderr) => {
+        if (err) {
+            console.error(err)
+        }
+            console.log(stdout)
         }
     );
 };
+
+createSchema("test");

@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { Operator } from "./prisma/schemas.js";
 
 class Account{
     static async insert(){
