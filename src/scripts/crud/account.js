@@ -1,16 +1,12 @@
-import { Operator } from "./prisma/schemas.js";
+import { Operator } from "../../../prisma/schemas.js";
 
 class Account{
-    static async insert(){
+    static async login(){
     
     };
 
-    static async check(){
+    static async register(){
         
-    };
-
-    static async update(){
-    
     };
 
     static async delete(){
