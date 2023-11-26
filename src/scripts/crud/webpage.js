@@ -7,17 +7,18 @@ export class Webpage{
         this.Operator = new operator({
                 datasources: { db: { url: process.env.PUBLIC_URL } },
             })
+        this.webpageTable = this.Operator.webpage;
     }
 
-    static async login(){
+    static async insert(){
     
     };
 
-    static async register(){
+    static async select(){
         
     };
 
-    static async delete(){
+    static async update(){
     
     };
 };

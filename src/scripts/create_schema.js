@@ -1,7 +1,7 @@
 import exec from 'child_process';
 import Fs from 'fs';
 
-createSchema = (accountId) => {
+export const createSchema = (accountId) => {
     Fs.readFile("./prisma/template.prisma", 'utf8', (err, data) => {
         if (err) {
             console.error(err);
