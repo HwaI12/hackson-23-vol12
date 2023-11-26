@@ -8,7 +8,7 @@ export class Webpage{
                 datasources: { db: { url: process.env.PUBLIC_URL } },
             })
         this.webpageTable = this.Operator.webpage;
-    }
+    };
 
     static async insert(){
     

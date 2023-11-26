@@ -10,13 +10,15 @@ export class Order{
                     datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
                 })
                 this.orderTable = this.Account.order;
+                this.user = accountId;
             })
             .catch((err) => {
                 console.error(err);
             });
-    }
+    };
 
     static async insert(){
+        
         
     };
 

@@ -8,7 +8,7 @@ export class Account{
                 datasources: { db: { url: process.env.PUBLIC_URL } },
             })
         this.accountTable = this.Operator.account;
-    }
+    };
 
     static async login(){
     
