@@ -21,7 +21,7 @@ export class Product{
 
     static async upsert(){
         // Webpageからaccount_idのもつmenuを取得
-        const menu = Webpage.findMany({
+        const menu = await Webpage.findMany({
             where: {
                 id: this.user
             }
@@ -32,13 +32,15 @@ export class Product{
         // const products = parseProduct(menu);
 
         // productを初期化
-        // this.productTable.deleteMany({});
+        // const reset = await this.productTable.deleteMany({});
 
         // // menuをinsert
-        // this.createMany({
+        // const query = await this.createMany({
         //     data: products,
         // }).catch(e => {
         //     throw e;
         // });
+        
+        // return query;
     };
 };
