@@ -21,7 +21,14 @@ export class Log{
     };
 
     static async profit(){
-    
+        const query = await this.logTable.findMany({
+            select: {
+                date: true,
+                price: true,
+                quantity: true
+            }
+        });
+        return query;
     };
 
     static async sales(){
