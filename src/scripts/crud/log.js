@@ -20,7 +20,8 @@ export class Log{
     
     };
 
-    static async profit(){
+    static async profit() {
+        // 日付、価格、数量を取得
         const query = await this.logTable.findMany({
             select: {
                 date: true,
@@ -28,7 +29,23 @@ export class Log{
                 quantity: true
             }
         });
-        return query;
+
+        // 日付ごとに収益と数量を集計
+        const result = query.reduce((acc, { date, price, quantity }) => {
+            const dateString = date.toISOString().split('T')[0];
+            if (!acc[dateString]) {
+                acc[dateString] = { profit: 0, quantity: 0 };
+            }
+            acc[dateString].profit += price * quantity; // 収益 = 価格 * 数量
+            acc[dateString].quantity += quantity; // 数量
+            return acc;
+        }, {});
+        
+        return {
+            date: Object.keys(result),
+            profit: Object.values(result).map(entry => entry.profit),
+            quantity: Object.values(result).map(entry => entry.quantity)
+        };
     };
 
     static async sales(){
