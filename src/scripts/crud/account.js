@@ -1,13 +1,19 @@
-import { PrismaClient as operator } from "../../../prisma/generated/operator";
 import dotenv from 'dotenv';
 dotenv.config();
 
 export class Account{
-    constructor(){
-        this.Operator = new operator({
-                datasources: { db: { url: process.env.PUBLIC_URL } },
+    constructor(accountId){
+        import(`../../../prisma/generated/${accountId}`)
+            .then((account) => {
+                this.Account = new account({
+                    datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
+                })
+                this.accountTable = this.Account.account;
+                this.user = accountId;
             })
-        this.accountTable = this.Operator.account;
+            .catch((err) => {
+                console.error(err);
+            });
     };
 
     static async login(email, password){

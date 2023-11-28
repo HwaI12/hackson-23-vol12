@@ -3,11 +3,18 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export class Webpage{
-    constructor(){
-        this.Operator = new operator({
-                datasources: { db: { url: process.env.PUBLIC_URL } },
+    constructor(accountId){
+        import(`../../../prisma/generated/${accountId}`)
+            .then((account) => {
+                this.Account = new account({
+                    datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
+                })
+                this.WebpageTable = this.Account.webpage;
+                this.user = accountId;
             })
-        this.webpageTable = this.Operator.webpage;
+            .catch((err) => {
+                console.error(err);
+            });
     };
 
     static async insert(account_id, color, table, menu){
