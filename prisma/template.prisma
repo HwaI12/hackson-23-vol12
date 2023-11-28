@@ -13,6 +13,7 @@ model Table {
   id        Int           @id @default(autoincrement())
   name      String?
   order     Order[]
+  log       Log[]
 }
 
 model Order {
@@ -26,9 +27,21 @@ model Order {
   provided    Boolean
 }
 
-model Product{
+model Product {
   id          Int         @id @default(autoincrement())
   name        String      @unique
   price       Int
   order     Order[]
+  log         Log[]
+}
+
+model Log {
+  id          Int         @id @default(autoincrement())
+  table       Int
+  tableId     Table       @relation(fields: [table], references: [id])
+  product     Int
+  productId   Product     @relation(fields: [product], references: [id])
+  quantity    Int       
+  price       Int       
+  timestamp   DateTime    @default(now())
 }
