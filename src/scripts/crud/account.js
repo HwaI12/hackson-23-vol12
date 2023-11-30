@@ -1,10 +1,8 @@
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { PrismaClient } from '@prisma/client';
 
 dotenv.config();
-const prisma = new PrismaClient();
 
 export class Account{
     constructor(accountId){
@@ -36,7 +34,7 @@ export class Account{
     };
 
     static async register(name, email, password) {
-        const existingUser = await prisma.account.findUnique({
+        const existingUser = await this.accountTable.findUnique({
             where: { email: email }
         });
 
@@ -48,7 +46,7 @@ export class Account{
 
             const accountId = uuidv4();
 
-            const newUser = await prisma.account.create({
+            const newUser = await this.accountTable.create({
                 data: {
                     id: accountId,
                     name: name,

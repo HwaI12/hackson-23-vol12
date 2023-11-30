@@ -17,7 +17,11 @@ export class Log{
     };
 
     static async insert(data){
-    
+        const query = await this.logTable.createMany({
+            data: data
+        });
+
+        return query;
     };
 
     static async profit() {
@@ -49,10 +53,20 @@ export class Log{
     };
 
     static async sales(){
-    
+        
     };
 
     static async correlation(){
-    
+        // product, price, quantityを取得
+        const query = await this.logTable.findMany({
+            select: {
+                product: true,
+                price: true,
+                quantity: true
+            }
+        });
+
+        console.log(query);
+        
     };
 };
