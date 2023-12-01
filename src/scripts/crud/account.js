@@ -5,14 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 dotenv.config();
 
 export class Account{
-    constructor(accountId){
-        import(`../../../prisma/generated/${accountId}`)
+    constructor(){
+        import(`../../../prisma/generated/operator`)
             .then((account) => {
-                this.Account = new account({
-                    datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
+                this.Operator = new account({
+                    datasources: { db: { url: process.env.PUBLIC_URL } },
                 })
-                this.accountTable = this.Account.account;
-                this.user = accountId;
+                this.accountTable = this.Operator.account;
             })
             .catch((err) => {
                 console.error(err);
@@ -59,10 +58,10 @@ export class Account{
         }
     };
 
-    static async delete(Account_id){
+    static async delete(account_id){
         const query = await this.accountTable.delete({
             where: {
-                id: Account_id
+                id: account_id
             }
         });
         return query;

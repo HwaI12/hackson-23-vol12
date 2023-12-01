@@ -35,7 +35,12 @@ export class Webpage{
                 account_id: account_id
             }
         });
-        return query;
+        
+        if (query){
+            return query;
+        }else{
+            return false;
+        }
     };
 
     static async update(account_id, color, table, menu){
