@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
-export class Account{
+export default class Account{
     constructor(){
         import(`../../../prisma/generated/operator`)
             .then((account) => {
