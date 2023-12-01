@@ -1,3 +1,5 @@
+// サインアップ入力画面のコンポーネント
+// 初めての方に案内する方
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import * as React from 'react';

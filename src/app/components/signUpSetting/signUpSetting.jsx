@@ -1,19 +1,18 @@
+// 初めての人に案内するページ　最初の設定をお手伝いするコンポーネント
 'use client';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import SignUp from './signIn/signUp';
+import HomeToolBar from '../homeToolBar/homeToolBar';
+import SignUp from './signUp/signUp';
 
 function Copyright() {
   return (
@@ -43,7 +42,7 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+export default function SignUpSetting() {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -56,22 +55,7 @@ export default function Checkout() {
 
   return (
     <React.Fragment>
-      <CssBaseline />
-      <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: 'relative',
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Hackson
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <HomeToolBar/>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
