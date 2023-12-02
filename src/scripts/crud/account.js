@@ -1,24 +1,16 @@
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient as Operator } from '../../../prisma/generated/operator';
 
 dotenv.config();
-const prisma = new PrismaClient();
 
 export default class Account{
     constructor(){
-        import(`../../../prisma/generated/operator`)
-            .then((account) => {
-                this.Account = new account({
-                    datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
-                })
-                this.accountTable = this.Account.account;
-                this.user = accountId;
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        this.client = new Operator({
+            datasources: { db: { url: process.env.PUBLIC_URL } },
+        }) 
+        this.accountTable = this.client.account;
     };
 
     async login(email, password){
@@ -36,7 +28,7 @@ export default class Account{
     };
 
     async register(name, email, password) {
-        const existingUser = await prisma.account.findUnique({
+        const existingUser = await prisma.account.findFirst({
             where: { email: email }
         });
 
