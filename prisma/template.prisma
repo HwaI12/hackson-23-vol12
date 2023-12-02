@@ -1,12 +1,12 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/ACCOUNTID"
+  output   = "../generated/ACCOUNTID"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("SCHEMA_URL?schema=ACCOUNTID")
+  url      = "postgres://orderstream:ptiXAKxiCSsOwqH4fVCPkqoQU3BMbmr8@dpg-cldb6d54lnec73e821m0-a.singapore-postgres.render.com/orderstream?schema=ACCOUNTID"
 }
 
 

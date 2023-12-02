@@ -1,14 +1,14 @@
-import exec from 'child_process';
+import { exec } from 'child_process';
 import Fs from 'fs';
 
-export const createSchema = (accountId) => {
+export default function createSchema(accountId) {
     Fs.readFile("./prisma/template.prisma", 'utf8', (err, data) => {
         if (err) {
             console.error(err);
         }
     
         // ファイルの内容を変更する
-        const modifiedData = data.replace("ACCOUNTID", accountId);
+        const modifiedData = data.replace(/ACCOUNTID/g, accountId);
     
         // 変更した内容でファイルを上書きする
         Fs.writeFile(`./prisma/models/${accountId}.prisma`, modifiedData, 'utf8', (err) => {
@@ -26,7 +26,7 @@ export const createSchema = (accountId) => {
         if (err) {
             console.error(err)
         }
-            console.log(stdout)
+            console.log("migrate done")
         }
     );
 
@@ -36,7 +36,7 @@ export const createSchema = (accountId) => {
         if (err) {
             console.error(err)
         }
-            console.log(stdout)
+            console.log("client generate done")
         }
     );
 };
