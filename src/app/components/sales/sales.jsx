@@ -13,9 +13,11 @@ function makeData(rowData) {
 export default function Sales(props) {
 
   const rowData = [
-    {rank:1,product:'商品A',quantity:10,},
-    {rank:2,product:'商品B',quantity:15,},
-    {rank:3,product:'商品C',quantity:20,},
+    {rank:1,product:'商品A',quantity:30,},
+    {rank:2,product:'商品B',quantity:20,},
+    {rank:3,product:'商品C',quantity:10,},
+    {rank:4,product:'商品D',quantity:9,},
+    {rank:5,product:'商品E',quantity:8,}
   ];
   
   const data = makeData(rowData);
