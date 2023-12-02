@@ -14,8 +14,11 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import DeployDialog from './deployDialog/deployDialog';
 import DeployQR from './deployQR/deployQR';
+import Link from 'next/link';
 
 const steps = ['テーブル設定', 'ダウンロード'];
+
+const account_id = 'test';
 
 function getStepContent(step) {
 
@@ -79,14 +82,15 @@ export default function DeployDialogSetting(props) {
             <React.Fragment>
               {getStepContent(activeStep)}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Link href={activeStep === steps.length - 1 ? `/[account_id]/home` : ''} as={activeStep === steps.length - 1 ? `/${account_id}/home` : undefined} passHref>
                 <Button
                   variant="contained"
                   onClick={handleNext}
-                  href = {activeStep === steps.length - 1 ? '/[account_id]/editmenu' : undefined}
                   sx={{ mt: 3, ml: 1 }}
                 >
                   {activeStep === steps.length - 1 ? 'Home' : 'Next'}
                 </Button>
+                </Link>
               </Box>
             </React.Fragment>
           )}

@@ -6,12 +6,15 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Image from 'next/image';
+import Link from 'next/link';
 import * as React from 'react';
 import HomeToolBar from '../homeToolBar/homeToolBar';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
+
+const account_id = 'test';
 
 export default function HomeScreen() {
   const handleSubmit = (event) => {
@@ -45,15 +48,17 @@ export default function HomeScreen() {
           <HomeToolBar/>
           <Grid container sx={{display:'flex',justifyContent:'center',alignItems:'center',}}>
             <Image src="/logo.png" alt="Picture of the author" width={300} height={300} />
-            <Grid item xs={12} sm={12} sx={{display:'flex',alignItems:'center',justifyContent:'center',mb:5,p:1}}>
+            <Grid item xs={12} sm={12} sx={{display:'flex',alignItems:'center',justifyContent:'center',mb:2,p:1}}>
               <Typography variant="h4" component="div" sx={{display:'flex',alignItems:'center',mb:0,borderBottom:1}}>
                 メニューを作成しましょう
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12} sx={{display:'flex',justifyContent:'center',alignItems:'center',mb:5}}>
-              <Button variant="contained" >メニューの編集</Button>
+              <Link href="/[account_id]/editmenu" as={`/${account_id}/editmenu`} passHref>
+                <Button variant="contained" href='/account_id/editmenu' >メニューの編集</Button>
+              </Link>
             </Grid>
-            <Grid item xs={12} sm={12} sx={{display:'flex',alignItems:'center',justifyContent:'center',mb:5,p:1}}>
+            <Grid item xs={12} sm={12} sx={{display:'flex',alignItems:'center',justifyContent:'center',mb:2,p:1}}>
               <Typography variant="h4" component="div" sx={{display:'flex',alignItems:'center',mb:0,borderBottom:1}}>
                 データを見ましょう
               </Typography>
