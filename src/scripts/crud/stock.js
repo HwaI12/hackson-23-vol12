@@ -1,29 +1,31 @@
-import { PrismaClient } from '../../../prisma/generated/3e24db21';
-import dotenv from 'dotenv';
-dotenv.config();
-
+import { type } from "os";
 import parseStock from "../parse_stock.js";
+
+async function importClient(accountId){
+    const client = require(`../../../prisma/clients/${accountId}.js`);
+    return client;
+};
 
 export default class Stock{
     constructor(accountId){
-        this.userSchema = new PrismaClient({
-            datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
-        });
-        this.stockTable = this.userSchema.stock;
         this.user = accountId;
     };
 
     async upsert(menu){
+        // clientをimport
+        const userSchema = await importClient(this.user);
+        const stockTable = userSchema.default.stock;
+
         // menuのjsonをparseしてstockとoptionごとのnameとpriceを取得
         const stocks = parseStock(menu);
 
         // stockを初期化
-        const reset = await this.stockTable.deleteMany({});
+        const reset = await stockTable.deleteMany({});
 
         // menuをinsert
-        const query = await this.stockTable.createMany({
+        const query = await stockTable.createMany({
             data: stocks
-        })
+        });
         
         return query;
     };

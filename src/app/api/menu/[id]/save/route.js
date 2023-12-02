@@ -18,11 +18,12 @@ export async function POST(request, { params }) {
     
     }else{
         // アカウントのmenuを新規登録
-        //const web_query = await webpage.insert(params.id, body.color, body.table, body.menu)
+        const web_query = await webpage.insert(params.id, body.color, body.table, body.menu)
         
         // stockを新規登録
-        const stock = new Stock(params.id).upsert(body.menu);
+        const stock = new Stock(params.id);
+        const query = stock.upsert(body.menu);
 
-        return NextResponse.json({ res : true }, { status: 500 })
+        return NextResponse.json({ query : query }, { status: 500 })
     }
 };

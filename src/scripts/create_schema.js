@@ -39,4 +39,19 @@ export default function createSchema(accountId) {
             console.log("client generate done")
         }
     );
+
+    // クライアントを作成する
+    const clientcontent =  `import {PrismaClient as C_${accountId}} from '../generated/${accountId}';\n
+                            import dotenv from 'dotenv';\n
+                            dotenv.config();\n
+                            const c${accountId} = new C_${accountId}({datasources:{db:{url:process.env.SCHEMA_URL+'${accountId}'}}});\n
+                            export default c${accountId};\n`;
+
+    Fs.writeFile(`./prisma/clients/${accountId}.js`, clientcontent, 'utf8', (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('clients created');
+        }
+    });
 };
