@@ -1,53 +1,53 @@
 import Stock from "./stock.js";
 import Log from "./log.js";
-import dotenv from 'dotenv';
-dotenv.config();
 
-export class Order{
+async function importClient(accountId){
+    const client = require(`../../../prisma/clients/${accountId}.js`);
+    return client;
+};
+
+export default class Order{
     constructor(accountId){
-        import(`../../../prisma/generated/${accountId}`)
-            .then((account) => {
-                this.Account = new account({
-                    datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
-                })
-                this.orderTable = this.Account.order;
-                this.user = accountId;
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        this.user = accountId;
     };
 
     // 1つの注文に対してしか使えないので、mapで回して使う
     async insert(table_id, stock_name, quantity){
-        
+
         // 商品idと価格を取得
-        const stock = await stock.findFirst({
-            where: {
-                name: stock_name
-            }
-        });
-        console.log(stock);
+        const stockClient = new Stock(this.user);
+        const stock = await stockClient.select_id(stock_name);
 
-        // テーブルに追加
-        // const query = await this.orderTable.create({
-        //     data: {
-        //         table_id: table_id,
-        //         stock_id: stock.id,
-        //         quantity: stock.price* quantity
-        //     }
-        // });
+        if (stock){
+            // テーブルに追加
+            const userSchema = await importClient(this.user);
+            const orderTable = userSchema.default.order;
+            const query = await orderTable.create({
+                data: {
+                    table: parseInt(table_id),
+                    stock: stock.id,
+                    quantity: quantity,
+                    price: stock.price,
+                    provided: false
+                }});
+                
+            return query;
 
-        // return query;
+        }else{
+            return false;
+        }
     };
 
     async provide(order_id){
-        const query = await this.orderTable.update({
+        const userSchema = await importClient(this.user);
+        const orderTable = userSchema.default.order;
+
+        const query = await orderTable.update({
             where: {
-                id: order_id
+                id: parseInt(order_id)
             },
             data:{
-                provide: true
+                provided: true
             }
         });
 
@@ -55,7 +55,11 @@ export class Order{
     };
 
     async cancel(order_id){
-        const query = await this.orderTable.delete({
+        // clientをimport
+        const userSchema = await importClient(this.user);
+        const orderTable = userSchema.default.order;
+
+        const query = await orderTable.delete({
             where: {
                 id: order_id
             }
@@ -65,26 +69,39 @@ export class Order{
     };
 
     async reset_table(table_id){
+        // clientをimport
+        const userSchema = await importClient(this.user);
+        const orderTable = userSchema.default.order;
+
         // テーブルの注文を取得
-        const table_order = await this.orderTable.findMany({
+        const table_order = await orderTable.findMany({
             where: {
-                table: table_id
+                table: parseInt(table_id)
             }
         });
 
         // json整形
-        console.log(table_order);
+        const log_data = table_order.map((order) => {
+            return {
+                table: order.table,
+                stock: order.stock,
+                quantity: order.quantity,
+                price: order.price,
+                timestamp: new Date()
+            };
+        });
 
         // logテーブルに追加
-        const log_query = await Log.insert(table_order);
+        const logTable = new Log(this.user);
+        const log_query = await logTable.insert(log_data);
 
         // テーブルの注文を削除
-        // const query = await this.orderTable.deleteMany({
-        //     where: {
-        //         table: table_id
-        //     }
-        // });
+        const query = await orderTable.deleteMany({
+            where: {
+                table: parseInt(table_id)
+            }
+        });
 
-        // return query;
+        return query;
     };
 };

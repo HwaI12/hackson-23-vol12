@@ -1,4 +1,3 @@
-import { type } from "os";
 import parseStock from "../parse_stock.js";
 
 async function importClient(accountId){
@@ -9,6 +8,36 @@ async function importClient(accountId){
 export default class Stock{
     constructor(accountId){
         this.user = accountId;
+    };
+
+    async select_id(name){
+        // clientをimport
+        const userSchema = await importClient(this.user);
+        const stockTable = userSchema.default.stock;
+
+        // stockidを取得
+        const query = await stockTable.findFirst({
+            where: {
+                name: name
+            }
+        });
+
+        return query;
+    };
+
+    async select_name(id){
+        // clientをimport
+        const userSchema = await importClient(this.user);
+        const stockTable = userSchema.default.stock;
+
+        // stockを取得
+        const query = await stockTable.findFirst({
+            where: {
+                id: id
+            } 
+        });
+
+        return query;
     };
 
     async upsert(menu){

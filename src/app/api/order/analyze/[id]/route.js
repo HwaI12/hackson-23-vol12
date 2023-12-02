@@ -11,13 +11,19 @@
 import { NextResponse } from 'next/server';
 import Log from '../../../../../scripts/crud/log.js';
 
-export async function GET(request) {
-    try {
-        const log = await new Log(request.params.id);
-        const analyzeData = { profit: log.profit(), sales: log.sales(), correlation: log.correlation()};
-        
-        return NextResponse.json(analyzeData, { status: 500 });
-    } catch (Exception) {
-        return NextResponse.json({ error: Exception.message }, { status: 500 });
+export async function GET(request, { params }) {
+    try{
+        const log = new Log(params.id);
+
+        const profitData = await log.profit();
+        const salesData = await log.sales();
+        const correlationData = await log.correlation();
+
+        return NextResponse.json({  profit: profitData, 
+                                    sales: salesData, 
+                                    correlation: correlationData
+                                }, { status: 500 });
+    } catch (e) {
+        return NextResponse.json({ error: e.message }, { status: 500 });
     }
 };

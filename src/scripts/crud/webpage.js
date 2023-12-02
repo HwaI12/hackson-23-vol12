@@ -25,7 +25,7 @@ export default class Webpage{
     async select(account_id){
         const query = await this.webpageTable.findFirst({
             where: {
-                account_id: account_id
+                id: account_id
             }
         });
         
@@ -39,7 +39,7 @@ export default class Webpage{
     async update(account_id, color, table, menu){
         const query = await this.webpageTable.update({
             where: {
-                account_id: account_id
+                id: account_id
             },
             data: {
                 color: color,

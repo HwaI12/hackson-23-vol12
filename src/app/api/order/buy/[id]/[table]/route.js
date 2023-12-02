@@ -9,11 +9,17 @@
 // フロント:「失敗しました」+ Exception.messageを表示
 
 import { NextResponse } from 'next/server';
-import Order from '../../../scripts/crud/order.js';
+import Order from '../../../../../../scripts/crud/order.js';
 
-export async function POST(request) {
-    const order = await new Order(request.params.id);
-    const query = await order.insert(request.params.id, request.params.table_id, request.body.product_name, request.body.quantity)
-    
-    return NextResponse.json({query: query}, { status: 500 });
+export async function POST(request, {params}) {
+    try{
+        const body = await request.json();
+
+        const order = new Order(params.id);
+        const query = await order.insert(params.table, body.product, body.quantity)
+        
+        return NextResponse.json(query, { status: 500 });
+    }catch(e){
+        return NextResponse.json({ error: e.message }, { status: 500 });
+    }
 }
