@@ -7,9 +7,9 @@ export async function POST(request) {
         const body = await request.json();
         const query = await account.login(body.email, body.password)
         
-        return NextResponse.json({ account_id: query }, { status: 500 })
+        return NextResponse.json({ account_id: query })
     
     }catch(e){
-        return NextResponse.json({ error: e.message }, { status: 500 })
+        return NextResponse.json({ error: e.message })
     }
 };

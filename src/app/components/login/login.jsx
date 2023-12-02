@@ -30,8 +30,9 @@ export default function Checkout() {
     };
     console.log(data);
     const getResponse = await postResponse('/api/login', data);
+
     setResponse(getResponse.account_id);
-    console.log(getResponse);
+
     if (getResponse.account_id === false) {
       alert('Email または Password が間違っています ');
     }else{
