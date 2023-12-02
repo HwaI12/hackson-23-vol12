@@ -19,7 +19,7 @@ export class Order{
     };
 
     // 1つの注文に対してしか使えないので、mapで回して使う
-    static async insert(table_id, product_name, quantity){
+    async insert(table_id, product_name, quantity){
         
         // 商品idと価格を取得
         const product = await Product.findFirst({
@@ -41,7 +41,7 @@ export class Order{
         // return query;
     };
 
-    static async provide(order_id){
+    async provide(order_id){
         const query = await this.orderTable.update({
             where: {
                 id: order_id
@@ -54,7 +54,7 @@ export class Order{
         return query;
     };
 
-    static async cancel(order_id){
+    async cancel(order_id){
         const query = await this.orderTable.delete({
             where: {
                 id: order_id
@@ -64,7 +64,7 @@ export class Order{
         return query;
     };
 
-    static async reset_table(table_id){
+    async reset_table(table_id){
         // テーブルの注文を取得
         const table_order = await this.orderTable.findMany({
             where: {

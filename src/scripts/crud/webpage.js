@@ -17,7 +17,7 @@ export class Webpage{
             });
     };
 
-    static async insert(account_id, color, table, menu){
+    async insert(account_id, color, table, menu){
         const query = await this.webpageTable.create({
             data: {
                 account_id: account_id,
@@ -29,7 +29,7 @@ export class Webpage{
         return query;
     };
 
-    static async select(account_id){
+    async select(account_id){
         const query = await this.webpageTable.findFirst({
             where: {
                 account_id: account_id
@@ -43,7 +43,7 @@ export class Webpage{
         }
     };
 
-    static async update(account_id, color, table, menu){
+    async update(account_id, color, table, menu){
         const query = await this.webpageTable.update({
             where: {
                 account_id: account_id
