@@ -13,26 +13,26 @@ datasource db {
 model Order {
   id          Int         @id @default(autoincrement())
   table       Int
-  product     Int
-  productId   Product     @relation(fields: [product], references: [id])
+  stock       Int
+  stockId     Stock       @relation(fields: [stock], references: [id])
   quantity    Int       
   price       Int       
   provided    Boolean
 }
 
-model Product {
+model Stock {
   id          Int         @id @default(autoincrement())
   name        String      @unique
   price       Int
-  order     Order[]
+  order       Order[]
   log         Log[]
 }
 
 model Log {
   id          Int         @id @default(autoincrement())
   table       Int
-  product     Int
-  productId   Product     @relation(fields: [product], references: [id])
+  stock       Int
+  stockId     Stock       @relation(fields: [stock], references: [id])
   quantity    Int       
   price       Int       
   timestamp   DateTime    @default(now())

@@ -1,4 +1,4 @@
-import Product from "./product.js";
+import Stock from "./stock.js";
 import Log from "./log.js";
 import dotenv from 'dotenv';
 dotenv.config();
@@ -19,22 +19,22 @@ export class Order{
     };
 
     // 1つの注文に対してしか使えないので、mapで回して使う
-    async insert(table_id, product_name, quantity){
+    async insert(table_id, stock_name, quantity){
         
         // 商品idと価格を取得
-        const product = await Product.findFirst({
+        const stock = await stock.findFirst({
             where: {
-                name: product_name
+                name: stock_name
             }
         });
-        console.log(product);
+        console.log(stock);
 
         // テーブルに追加
         // const query = await this.orderTable.create({
         //     data: {
         //         table_id: table_id,
-        //         product_id: product.id,
-        //         quantity: product.price* quantity
+        //         stock_id: stock.id,
+        //         quantity: stock.price* quantity
         //     }
         // });
 

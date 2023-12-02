@@ -1,19 +1,19 @@
-import { PrismaClient as Operator } from '../../../prisma/generated/operator';
 import dotenv from 'dotenv';
 dotenv.config();
+import { PrismaClient as Operator } from '../../../prisma/generated/operator';
 
-export class Webpage{
+export default class Webpage{
     constructor(){
         this.client = new Operator({
             datasources: { db: { url: process.env.PUBLIC_URL } },
         })
-        this.accountTable = this.client.webpage; 
+        this.webpageTable = this.client.webpage; 
     };
 
     async insert(account_id, color, table, menu){
         const query = await this.webpageTable.create({
             data: {
-                account_id: account_id,
+                id: account_id,
                 color: color,
                 table: table,
                 menu: menu

@@ -35,7 +35,7 @@ export default class Account{
         if (existingUser) {
             return false;
         } else {
-            const accountId = uuidv4();
+            const accountId = uuidv4().split('-')[0];
 
             const newUser = await this.accountTable.create({
                 data: {

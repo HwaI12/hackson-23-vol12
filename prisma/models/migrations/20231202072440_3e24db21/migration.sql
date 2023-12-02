@@ -2,7 +2,7 @@
 CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
     "table" INTEGER NOT NULL,
-    "product" INTEGER NOT NULL,
+    "stock" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
     "provided" BOOLEAN NOT NULL,
@@ -11,19 +11,19 @@ CREATE TABLE "Order" (
 );
 
 -- CreateTable
-CREATE TABLE "Product" (
+CREATE TABLE "Stock" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
 
-    CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Stock_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Log" (
     "id" SERIAL NOT NULL,
     "table" INTEGER NOT NULL,
-    "product" INTEGER NOT NULL,
+    "stock" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -32,10 +32,10 @@ CREATE TABLE "Log" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Product_name_key" ON "Product"("name");
+CREATE UNIQUE INDEX "Stock_name_key" ON "Stock"("name");
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_product_fkey" FOREIGN KEY ("product") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_stock_fkey" FOREIGN KEY ("stock") REFERENCES "Stock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Log" ADD CONSTRAINT "Log_product_fkey" FOREIGN KEY ("product") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Log" ADD CONSTRAINT "Log_stock_fkey" FOREIGN KEY ("stock") REFERENCES "Stock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

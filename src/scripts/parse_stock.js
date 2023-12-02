@@ -1,5 +1,4 @@
-export const parseProduct = (menu_string) => {
-    const menu_json = JSON.parse(menu_string);
+export default function parseStock(menu_json) {
     let products = [];
 
     for (const category in menu_json) {
