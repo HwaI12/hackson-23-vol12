@@ -22,13 +22,13 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="売上の推移" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href="#sales">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
       <ListItemText primary="商品別の売上" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href="#correlation">
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
