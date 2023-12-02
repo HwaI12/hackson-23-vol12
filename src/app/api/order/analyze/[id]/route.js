@@ -8,14 +8,16 @@
 // バック： return Exception.message
 // フロント:「失敗しました」+ Exception.messageを表示
 
-import Log from '../../../scripts/crud/log.js';
-const log = new Log();
+import { NextResponse } from 'next/server';
+import Log from '../../../../../scripts/crud/log.js';
 
 export async function GET(request) {
     try {
-        const { profit, sales, correlation } = await log.analyze(request.params.id);
-        return { profit, sales, correlation };
+        const log = await new Log(request.params.id);
+        const analyzeData = { profit: log.profit(), sales: log.sales(), correlation: log.correlation()};
+        
+        return NextResponse.json(analyzeData, { status: 500 });
     } catch (Exception) {
-        return Exception.message;
+        return NextResponse.json({ error: Exception.message }, { status: 500 });
     }
 };

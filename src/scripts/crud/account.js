@@ -28,7 +28,7 @@ export default class Account{
     };
 
     async register(name, email, password) {
-        const existingUser = await prisma.account.findFirst({
+        const existingUser = await this.accountTable.findFirst({
             where: { email: email }
         });
 
@@ -40,7 +40,7 @@ export default class Account{
 
             const accountId = uuidv4();
 
-            const newUser = await prisma.account.create({
+            const newUser = await this.accountTable.create({
                 data: {
                     id: accountId,
                     name: name,
