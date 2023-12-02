@@ -19,7 +19,7 @@ export class Product{
             });
     };
 
-    static async upsert(){
+    async upsert(){
         // Webpageからaccount_idのもつmenuを取得
         const menu = await Webpage.findMany({
             where: {
