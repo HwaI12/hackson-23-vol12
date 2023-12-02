@@ -4,7 +4,7 @@ import { useTheme } from '@emotion/react';
 import AppBar from '@mui/material/AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import Image from 'next/image';
 import React from 'react';
 
 export const getDividerColor = (t) => {
@@ -28,9 +28,7 @@ export default function HomeToolBar() {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Hackson
-          </Typography>
+          <Image src="/logo.png" alt="Picture of the author" width={50} height={50} />
         </Toolbar>
       </AppBar>
   </React.Fragment>

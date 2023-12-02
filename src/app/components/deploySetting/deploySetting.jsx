@@ -82,7 +82,7 @@ export default function DeployDialogSetting(props) {
                 <Button
                   variant="contained"
                   onClick={handleNext}
-                  href = {activeStep === steps.length - 1 ? '/home' : undefined}
+                  href = {activeStep === steps.length - 1 ? '/[account_id]/editmenu' : undefined}
                   sx={{ mt: 3, ml: 1 }}
                 >
                   {activeStep === steps.length - 1 ? 'Home' : 'Next'}
