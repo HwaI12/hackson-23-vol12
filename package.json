@@ -14,11 +14,13 @@
     "@mui/base": "^5.0.0-beta.24",
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
+    "@mui/x-charts": "^6.18.2",
     "@prisma/client": "^5.6.0",
     "axios": "^1.6.2",
     "next": "^14.0.3",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^2.10.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
