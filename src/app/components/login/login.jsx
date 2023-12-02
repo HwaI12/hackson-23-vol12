@@ -8,36 +8,49 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useState } from 'react';
 import HomeToolBar from '../homeToolBar/homeToolBar';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import { postResponse } from '../../../scripts/response';
+import Image from 'next/image';
 
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-function handleSubmit(e){
-  console.log(e.currentTarget);
-  e.preventDefault();
-  const data = new FormData(e.currentTarget);
-  console.log(data);
-}
 
 export default function Checkout() {
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [response, setResponse] = useState('');
+  const [showDialog , setShowDialog] = useState(false);
+
+  const handleSubmit = async() => {
+    // フォームのデータを作成
+    const data = {
+      email: email,
+      password: password,
+    };
+    console.log(data);
+    const getResponse = await postResponse('/api/login', data);
+    setResponse(getResponse.account_id);
+    console.log(getResponse);
+    if (getResponse.account_id === false) {
+      alert('Email または Password が間違っています ');
+    }else{
+      setShowDialog(true);
+    }
+  };
+
+  const handleClose = () => {
+    setShowDialog(false);
+  }
 
   return (
     <React.Fragment>
       <HomeToolBar/>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+          <Grid container spacing={3} sx={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <Image src="/logo.png" alt="Picture of the author" width={50} height={50}/>
+          </Grid>
           <Typography component="h1" variant="h4" align="center">
             Log In
           </Typography>
@@ -45,14 +58,13 @@ export default function Checkout() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  length="10"
-                  id="accountName"
-                  name="accountName"
-                  label="アカウント名 or Email"
+                  id="Email"
+                  name="Email"
+                  label=" Email"
                   fullWidth
-                  autoComplete="アカウント名"
+                  autoComplete="Email"
                   variant="standard"
-                  
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -65,6 +77,7 @@ export default function Checkout() {
                   fullWidth
                   autoComplete="パスワードを入力"
                   variant="standard"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
           </React.Fragment>
@@ -79,9 +92,6 @@ export default function Checkout() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
             </Grid>
             <Grid item>
               <Link href="/register" variant="body2">
@@ -90,7 +100,10 @@ export default function Checkout() {
             </Grid>
           </Grid>
         </Paper>
-        <Copyright />
+        <Dialog fullWidth={true} maxWidth={'sm'} open={showDialog}>
+          <DialogTitle>登録完了</DialogTitle>
+          <Button variant='contained' href={`/${response}/home`} onClick={handleClose}>ログイン画面へ</Button>
+        </Dialog>
       </Container>
     </React.Fragment>
   );
