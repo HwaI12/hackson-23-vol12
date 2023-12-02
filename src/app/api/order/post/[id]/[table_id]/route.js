@@ -15,5 +15,5 @@ export async function POST(request) {
     const order = await new Order(request.params.id);
     const query = await order.insert(request.params.id, request.params.table_id, request.body.product_name, request.body.quantity)
     
-    return query;
+    return NextResponse.json({query: query}, { status: 500 });
 }

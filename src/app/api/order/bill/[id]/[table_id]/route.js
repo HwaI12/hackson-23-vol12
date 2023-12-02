@@ -10,9 +10,9 @@
 
 import { NextResponse } from 'next/server';
 import Order from '../../../scripts/crud/order.js';
-const order = new Order();
 
 export async function GET(request) {
+    const order = await new Order(request.params.id);
     const query = await order.reset_table(request.params.id, request.params.table_id)
     
     return NextResponse.json({query: query}, { status: 500 });
