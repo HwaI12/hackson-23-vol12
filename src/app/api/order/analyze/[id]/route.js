@@ -22,8 +22,8 @@ export async function GET(request, { params }) {
         return NextResponse.json({  profit: profitData, 
                                     sales: salesData, 
                                     correlation: correlationData
-                                }, { status: 500 });
+                                });
     } catch (e) {
-        return NextResponse.json({ error: e.message }, { status: 500 });
+        return NextResponse.json({ error: e.message });
     }
 };
