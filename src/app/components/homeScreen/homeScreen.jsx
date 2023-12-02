@@ -44,7 +44,7 @@ export default function HomeScreen() {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square >
           <HomeToolBar/>
           <Grid container sx={{display:'flex',justifyContent:'center',alignItems:'center',}}>
-            <Image src="./logo.png" alt="Picture of the author" width={300} height={300} />
+            <Image src="/logo.png" alt="Picture of the author" width={300} height={300} />
             <Grid item xs={12} sm={12} sx={{display:'flex',alignItems:'center',justifyContent:'center',mb:5,p:1}}>
               <Typography variant="h4" component="div" sx={{display:'flex',alignItems:'center',mb:0,borderBottom:1}}>
                 メニューを作成しましょう
