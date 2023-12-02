@@ -28,30 +28,31 @@ export default class Account{
     };
 
     async register(name, email, password) {
-        const existingUser = await this.accountTable.findFirst({
-            where: { email: email }
-        });
-
-        if (existingUser) {
-            return false;
-        } else {
+        try {
+            if (!password || password.trim() === '') {
+                return NextResponse.error('パスワードが空です', 400);
+            }
+    
             const salt = bcrypt.genSaltSync(10);
-            const hashedPassword = bcrypt.hashSync(password, salt);
-
-            const accountId = uuidv4();
-
-            const newUser = await this.accountTable.create({
+            const hash = bcrypt.hashSync(password, salt);
+            
+            // console.log("ハッシュ化されたパスワード: ", hash); 
+            
+            const query = await this.accountTable.create({
                 data: {
-                    id: accountId,
+                    id: uuidv4(),
                     name: name,
                     email: email,
-                    password: hashedPassword
+                    password: hash
                 }
             });
-
-            return newUser.id;
+    
+            return query.id;
+        } catch (error) {
+            console.error("Error in register: ", error);
+            throw error;
         }
-    };
+    };    
 
     async delete(Account_id){
         const query = await this.accountTable.delete({
