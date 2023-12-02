@@ -36,7 +36,7 @@ export default class Account{
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt);
             
-            console.log("ハッシュ化されたパスワード: ", hash); 
+            // console.log("ハッシュ化されたパスワード: ", hash); 
             
             const query = await this.accountTable.create({
                 data: {

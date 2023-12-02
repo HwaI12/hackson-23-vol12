@@ -8,15 +8,12 @@
 // バック： return Exception.message
 // フロント:「失敗しました」+ Exception.messageを表示
 
+import { NextResponse } from 'next/server';
 import Order from '../../../scripts/crud/order.js';
-const order = new Order();
 
 export async function GET(request) {
+    const order = await new Order(request.params.id);
     const query = await order.reset_table(request.params.id, request.params.table_id)
-        .then((result) => {
-            return result;
-        }).catch((Exception) => {
-            return Exception.message;
-        });
-    return query;
+    
+    return NextResponse.json({query: query}, { status: 500 });
 }
