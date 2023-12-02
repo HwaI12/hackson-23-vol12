@@ -7,26 +7,33 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as React from 'react';
+import OptionDialog from '../optionDialog/optionDialog';
 
 const ITEM_HEIGHT = 48;
 
 export default function HeightMenu_OptionCard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
   const options = ['編集','削除'];
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleSelect = (option) => {
     switch (option) {
       case '編集':
-        return console.log('Change Name clicked');
+        return setDialogOpen(true);
       case '削除':
         return console.log('Delete clicked');
       default:
         throw new Error('Unknown step');
     }
+    handleClose();
   };
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -59,11 +66,14 @@ export default function HeightMenu_OptionCard() {
         }}
       >
         {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={()=>handleSelect}>
+          <MenuItem key={option} selected={option === 'Pyxis'} onClick={()=>handleSelect(option)}>
             {option}
           </MenuItem>
         ))}
       </Menu>
+      <OptionDialog open={dialogOpen} handleClose={() => {
+        setDialogOpen(false);
+        handleClose();}} />
     </div>
   );
 }

@@ -7,21 +7,29 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as React from 'react';
+import ProductDialog from '../productDialog/productDialog';
 
 const ITEM_HEIGHT = 48;
 
 export default function HeightMenu_CommodityCard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const options = ['編集','後に移動','前に移動','最後に移動','最前に移動','削除'];
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const options = ['編集', '後に移動', '前に移動', '最後に移動', '最前に移動', '削除'];
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleSelect = (option) => {
-    console.log(option);
     switch (option) {
       case '編集':
-        return console.log('Change Name clicked');
+        return setDialogOpen(true);
       case '後に移動':
         return console.log('Move Forward clicked');
       case '前に移動':
@@ -35,9 +43,7 @@ export default function HeightMenu_CommodityCard() {
       default:
         throw new Error('Unknown step');
     }
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+    handleClose();
   };
 
   return (
@@ -68,11 +74,15 @@ export default function HeightMenu_CommodityCard() {
         }}
       >
         {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={()=>handleSelect}>
+          <MenuItem key={option} onClick={() => handleSelect(option)}>
             {option}
           </MenuItem>
         ))}
       </Menu>
+      <ProductDialog open={dialogOpen} handleClose={() =>{
+        setDialogOpen(false);
+        handleClose();
+      }} />
     </div>
   );
 }

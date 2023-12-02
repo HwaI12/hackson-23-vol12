@@ -7,7 +7,6 @@ import HomeToolBar from '../../../components/homeToolBar/homeToolBar';
 import PlusCard from '../../../components/plusCard/plusCard';
 
 export default function Options() {
-  const OptionMenu = ['編集','削除'];
   return (
     <React.Fragment>
       <HomeToolBar/>
@@ -17,8 +16,8 @@ export default function Options() {
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{p:10,pb:5,pt:5}}>
-        <AddSubCategoryCard menuName='Sub Category1' menuPrice='100円' optionMenu={OptionMenu}/>
-        <AddSubCategoryCard menuName='Sub Category1' menuPrice='100円' optionMenu={OptionMenu}/>
+        <AddSubCategoryCard menuName='Sub Category1' menuPrice='100円' component='1'/>
+        <AddSubCategoryCard menuName='Sub Category1' menuPrice='100円' component='1'/>
         <PlusCard/>
       </Grid>
     </React.Fragment>
