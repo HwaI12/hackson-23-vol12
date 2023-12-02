@@ -4,19 +4,15 @@ dotenv.config();
 import Webpage from "./webpage.js";
 import parseProduct from "../parse_product.js";
 
+
 export class Product{
     constructor(accountId){
-        import(`../../../prisma/generated/${accountId}`)
-            .then((account) => {
-                this.Account = new account({
-                    datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
-                })
-                this.productTable = this.Account.product;
-                this.user = accountId;
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        const { PrismaClient } = import(`../../../prisma/generated/${accountId}`)
+        this.userSchema = new PrismaClient({
+            datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
+        });
+        this.productTable = this.userSchema.product;
+        this.user = accountId;
     };
 
     async upsert(){
