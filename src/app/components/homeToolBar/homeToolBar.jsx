@@ -28,7 +28,7 @@ export default function HomeToolBar() {
         }}
       >
         <Toolbar>
-          <Image src="/logo.png" alt="logo" width={60} height={50} />
+          <Image src="/logo.png" alt="Picture of the author" width={50} height={50} />
         </Toolbar>
       </AppBar>
   </React.Fragment>
