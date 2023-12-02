@@ -11,7 +11,7 @@
 // プロミスを作る
 // 全キャッチでエラーを返す
 
-import Order from '../../../scripts/crud/order.js';
+import Order from './scripts/crud/order.js';
 const order = new Order();
 
 export async function GET(request) {

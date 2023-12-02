@@ -7,8 +7,8 @@ dotenv.config();
 const prisma = new PrismaClient();
 
 export default class Account{
-    constructor(accountId){
-        import(`../../../prisma/generated/${accountId}`)
+    constructor(){
+        import(`../../../prisma/generated/operator`)
             .then((account) => {
                 this.Account = new account({
                     datasources: { db: { url: process.env.SCHEMA_URL + accountId } },
