@@ -54,8 +54,13 @@ export default function HomeScreen() {
                 </Button>
             </Grid>
             <Grid item xs={12} sm={12} sx={{display:'flex',justifyContent:'center',alignItems:'center',mb:5}}>
-              <Button href="/account_id/analyze" variant="outlined" sx={{paddingTop:"20px", paddingBottom:"20px", paddingRight:"30px", paddingLeft:"30px"}}>
+              <Button href="/account_id/analyze" variant="contained" sx={{paddingTop:"20px", paddingBottom:"20px", paddingRight:"30px", paddingLeft:"30px"}}>
                 データを見る
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={12} sx={{display:'flex',justifyContent:'center',alignItems:'center',mb:5}}>
+              <Button href="/login" variant="outlined" sx={{paddingTop:"20px", paddingBottom:"20px", paddingRight:"30px", paddingLeft:"30px"}}>
+                ログアウト
               </Button>
             </Grid>
           </Grid>
