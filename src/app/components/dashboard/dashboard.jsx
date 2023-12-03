@@ -13,11 +13,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import * as React from 'react';
-import Correleation from '../correlation/correlation.jsx';
 import { mainListItems } from '../listItems/listItems.jsx';
-import Profit from '../profit/profit.jsx';
+
+import TodaySales from '../profitPeek/today.jsx';
+import LogTable from '../profitPeek/logtable.jsx';
 import Sales from '../sales/sales.jsx';
-import Correl from '../correl/correl.jsx';
+import Correl from '../collel/collel.jsx';
+import { borderBottom, fontSize } from '@mui/system';
 
 const drawerWidth = 240;
 
@@ -64,16 +66,16 @@ export default function Dashboard() {
               <MenuIcon />
             <Typography
               component="h1"
-              variant="h5"
+              variant="h4"
               color="inherit"
               noWrap
-              sx={{ flexGrow: 1, paddingLeft: "20%"}}
+              sx={{ flexGrow: 1, paddingLeft: "20%", fontFamily: 'Quantico'}}
             >
               Dashboard
             </Typography>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={true}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -104,7 +106,31 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={12} md={12} lg={6}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '50vh',
+                  }}
+                >
+                  <Grid container spacing={2}>
+                    <Grid item xs={6} md={6} lg={6}>
+                      <Typography variant="h6" component="h2" gutterBottom>
+                        本日の売上
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} md={6} lg={6}>
+                      <Typography textAlign={"right"}>
+                        <span style={{fontSize:"15px"}}>前日との差：</span><strong style={{fontSize:"25px"}}>-16%</strong>
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <TodaySales/>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={12} lg={6}>
                 <Paper
                   sx={{
                     p: 2,
@@ -114,9 +140,9 @@ export default function Dashboard() {
                   }}
                 >
                   <Typography variant="h6" component="h2" gutterBottom>
-                    売上の推移
+                    会計ログ
                   </Typography>
-                  <Profit/>
+                  <LogTable/>
                 </Paper>
               </Grid>
               <Grid item xs={6} md={6} lg={6}>
@@ -147,25 +173,6 @@ export default function Dashboard() {
                     売上と商品の相関
                   </Typography>
                   <Correl/>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Container>
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12} lg={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '50vh',
-                  }}
-                >
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    売上と注文の相関
-                  </Typography>
-                  <Correleation/>
                 </Paper>
               </Grid>
             </Grid>
