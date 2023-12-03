@@ -1,0 +1,39 @@
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/98a87f76"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://orderstream:ptiXAKxiCSsOwqH4fVCPkqoQU3BMbmr8@dpg-cldb6d54lnec73e821m0-a.singapore-postgres.render.com/orderstream?schema=98a87f76"
+}
+
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  table       Int
+  stock       Int
+  stockId     Stock       @relation(fields: [stock], references: [id])
+  quantity    Int       
+  price       Int       
+  provided    Boolean
+}
+
+model Stock {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  price       Int
+  order       Order[]
+  log         Log[]
+}
+
+model Log {
+  id          Int         @id @default(autoincrement())
+  table       Int
+  stock       Int
+  stockId     Stock       @relation(fields: [stock], references: [id])
+  quantity    Int       
+  price       Int       
+  timestamp   DateTime    @default(now())
+}

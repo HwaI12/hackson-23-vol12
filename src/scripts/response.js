@@ -2,8 +2,9 @@ import axios from "axios";
 
 const Domain = "http://localhost:3000";
 
+
 // get methodでのレスポンスを返す関数
-const getResponse = async (endpoint) => {
+const getResponse = async () => {
     try {
         const res = await axios.get(Domain + endpoint);
         return res.data;
@@ -21,6 +22,5 @@ const postResponse = async (endpoint, data) => {
         throw e;
     }
 }
-
 
 export {getResponse, postResponse};

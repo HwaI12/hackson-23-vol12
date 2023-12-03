@@ -9,7 +9,7 @@ import React from 'react';
 export default function PlusCard() {
   return(
     <Grid item md={3} >
-      <Card sx={{ display:'flex',alignItems:'center',justifyContent:'center', maxWidth: 345, height:1 }}>
+      <Card sx={{ display:'flex',alignItems:'center',justifyContent:'center', width:'20vw',minHeight:'15vh'}}>
         <CardActionArea sx={{maxWidth: 345, height:1}}>
           <CardContent sx={{textAlign:'center'}}>
             <Tooltip title="add menu">

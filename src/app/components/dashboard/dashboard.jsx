@@ -1,5 +1,4 @@
 'use client';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -8,7 +7,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import MuiDrawer from '@mui/material/Drawer';
 import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,8 +14,12 @@ import Typography from '@mui/material/Typography';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import * as React from 'react';
 import { mainListItems } from '../listItems/listItems.jsx';
-import Profit from '../profit/profit.jsx';
+
+import TodaySales from '../profitPeek/today.jsx';
+import LogTable from '../profitPeek/logtable.jsx';
 import Sales from '../sales/sales.jsx';
+import Correl from '../collel/collel.jsx';
+import { borderBottom, fontSize } from '@mui/system';
 
 const drawerWidth = 240;
 
@@ -51,45 +53,29 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute" open={true}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
             }}
           >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
               <MenuIcon />
-            </IconButton>
             <Typography
               component="h1"
-              variant="h6"
+              variant="h4"
               color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1, paddingLeft: "20%", fontFamily: 'Quantico'}}
             >
               Dashboard
             </Typography>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+        <Drawer variant="permanent" open={true}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -98,9 +84,6 @@ export default function Dashboard() {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
           </Toolbar>
           <Divider />
           <List component="nav">
@@ -123,7 +106,7 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={12} md={12} lg={6}>
                 <Paper
                   sx={{
                     p: 2,
@@ -132,20 +115,22 @@ export default function Dashboard() {
                     height: '50vh',
                   }}
                 >
-                  <Typography variant="h6" component="h2" gutterBottom>
-                    売上の推移
-                  </Typography>
-                  <Typography variant="body1" component="h2" gutterBottom>
-                    左軸:profit 右軸:quantity(現在非表示)
-                  </Typography>
-                  <Profit/>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6} md={6} lg={6}>
+                      <Typography variant="h6" component="h2" gutterBottom>
+                        本日の売上
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} md={6} lg={6}>
+                      <Typography textAlign={"right"}>
+                        <span style={{fontSize:"15px"}}>前日との差：</span><strong style={{fontSize:"25px"}}>-16%</strong>
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <TodaySales/>
                 </Paper>
               </Grid>
-            </Grid>
-          </Container>
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={12} md={12} lg={6}>
                 <Paper
                   sx={{
                     p: 2,
@@ -155,9 +140,40 @@ export default function Dashboard() {
                   }}
                 >
                   <Typography variant="h6" component="h2" gutterBottom>
-                    商品別の売上
+                    会計ログ
+                  </Typography>
+                  <LogTable/>
+                </Paper>
+              </Grid>
+              <Grid item xs={6} md={6} lg={6}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '50vh',
+                  }}
+                >
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    商品別の売上（top5）
                   </Typography>
                   <Sales/>
+                </Paper>
+              </Grid>
+              <Grid item xs={6} md={6} lg={6}>
+
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '50vh',
+                  }}
+                >
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    売上と商品の相関
+                  </Typography>
+                  <Correl/>
                 </Paper>
               </Grid>
             </Grid>

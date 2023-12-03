@@ -1,6 +1,7 @@
 //ツールバー　いつも上につける
 'use client';
 import { useTheme } from '@emotion/react';
+import { Typography } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
@@ -28,7 +29,15 @@ export default function HomeToolBar() {
         }}
       >
         <Toolbar>
-          <Image src="/logo.png" alt="Picture of the author" width={50} height={50} />
+          <Image src="/logo.png" alt="Picture of the author" width={100} height={60} 	style={{objectFit: "contain"}}/>
+          <Typography
+            component="h1"
+            variant="h4"
+            color="inherit"
+            noWrap
+            sx={{ flexGrow: 1, fontFamily: 'Quantico', color: '#6D6D6D'}}>
+            OrderStream
+          </Typography>
         </Toolbar>
       </AppBar>
   </React.Fragment>
