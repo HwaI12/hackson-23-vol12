@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Domain = "http://localhost:3000";
+const Domain = "https://orderstream.vercel.app";
 
 
 // get methodでのレスポンスを返す関数
