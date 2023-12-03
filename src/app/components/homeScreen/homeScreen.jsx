@@ -16,7 +16,7 @@ const defaultTheme = createTheme();
 
 const account_id = 'test';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
