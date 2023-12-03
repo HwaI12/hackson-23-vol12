@@ -14,9 +14,9 @@ import HomeToolBar from '../homeToolBar/homeToolBar';
 
 const defaultTheme = createTheme();
 
-const account_id = 'test';
+export default function HomeScreen(props) {
+  const account_id = props.id;
 
-export default function HomeScreen() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -49,12 +49,12 @@ export default function HomeScreen() {
           <Grid container sx={{display:'flex',justifyContent:'center',alignItems:'center',}}>
             <Image src="/logo.png" alt="Picture of the author" width={300} height={300} style={{objectFit: "contain"}}/>
             <Grid item xs={12} sm={12} sx={{display:'flex',justifyContent:'center',alignItems:'center',mb:5}}>
-                <Button variant="contained" href='/account_id/editmenu' sx={{paddingTop:"20px", paddingBottom:"20px", paddingRight:"30px", paddingLeft:"30px"}}>
+                <Button variant="contained" href={`/${account_id}/editmenu`} sx={{paddingTop:"20px", paddingBottom:"20px", paddingRight:"30px", paddingLeft:"30px"}}>
                   メニューの作成
                 </Button>
             </Grid>
             <Grid item xs={12} sm={12} sx={{display:'flex',justifyContent:'center',alignItems:'center',mb:5}}>
-              <Button href="/account_id/analyze" variant="contained" sx={{paddingTop:"20px", paddingBottom:"20px", paddingRight:"30px", paddingLeft:"30px"}}>
+              <Button href={`/${account_id}/analyze`} variant="contained" sx={{paddingTop:"20px", paddingBottom:"20px", paddingRight:"30px", paddingLeft:"30px"}}>
                 データを見る
               </Button>
             </Grid>
