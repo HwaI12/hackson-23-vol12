@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { useRouter } from 'next/navigation';
-import menuData from '../../../../scripts//menu.json';
+import { useRouter } from 'next/navigation'; // useRouter のインポートを修正
+import MenuItemComponent from '../../../components/menuitem/menuitem.jsx';
 import {
   AppBar,
   Box,
@@ -14,49 +14,94 @@ import {
   Typography,
   CssBaseline,
 } from '@mui/material';
+// import item from './[title]/page';
 
 // Example category data
-const categories = Object.keys(menuData);
-const classes = {};
-categories.forEach((category) => {
-  classes[category] = Object.keys(menuData[category]);
-});
+const categories = ['ランチ', 'ディナー', 'サラダ', 'デザート', 'ドリンク'];
+
+// Example menu items for each category
+const allMenuItems = {
+  'ランチ': [
+    { title: '〇〇ハンバーグ', imageUrl: '/images/hambarger.jpg' },
+    { title: '〇〇ハンバーグ', imageUrl: '/images/hambarger2.jpg' },
+    { title: '〇〇ハンバーグ', imageUrl: '/images/hamberger.jpg' },
+    { title: 'お肉とご飯', imageUrl: '/images/28286192_s.jpg' },
+  ],
+  'ディナー': [
+    { title: 'もうすぐ', imageUrl: '/images/duck-2957809_1280.jpg' },
+    { title: 'クリスマス', imageUrl: '/images/meatloaf-3747129_1280.jpg' },
+    { title: 'ジングルベル', imageUrl: '/images/pizza-5275191_1280.jpg' },
+    { title: 'ジングルベル', imageUrl: '/images/cake1.jpg' },
+    { title: '鈴が', imageUrl: '/images/christmas-dinner-3011500_1280.jpg' },
+    { title: 'なる〜', imageUrl: '/images/toast.jpg' },
+  ],
+  'サラダ': [
+    { title: '草', imageUrl: '/images/cilantro-1287301_1280.jpg' },
+    { title: '草', imageUrl: '/images/cilantro-1287301_1280.jpg' },
+    { title: '草', imageUrl: '/images/cilantro-1287301_1280.jpg' },
+    { title: '草', imageUrl: '/images/cilantro-1287301_1280.jpg' },
+  ],
+  'デザート': [
+    { title: 'ケーキ', imageUrl: '/images/cake2.jpg' },
+    { title: 'ケーキ', imageUrl: '/images/cake1.jpg' },
+  ],
+  'ドリンク': [
+    { title: 'ビール', imageUrl: '/images/beer.jpg' },
+    { title: 'カフェオレ', imageUrl: '/images/coffee.jpg' },
+    { title: 'ココア', imageUrl: '/images/cocoa.jpg' },
+    { title: 'ココア？', imageUrl: '/images/cocoa.jpg' },
+  ],
+};
+
+const account_id = "3e24db21";
+const table_id = "01";
 
 const menu = () => {
+
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const categoryBarRef = useRef(null);
+
+  const [orderCart, setOrderCart] = useState([]);
+  const [orderHistory, setOrderHistory] = useState([]);
+
+
+  const addToCart = (item) => {
+    setOrderCart(currentItems => [...currentItems, item]);
+  };
+
+  const confirmOrder = () => {
+    setOrderHistory(currentOrderHistory => [
+      ...currentOrderHistory,
+      ...orderCart
+    ]);
+    setOrderCart([]);
+  };
+
+  const cartItemCount = orderCart.length;
+
 
   const router = useRouter();
 
   const order = () => {
-    router.push('/[account_id]/menu/[table_id]/order');
+    router.push(`/${account_id}/menu/${table_id}/order`);
   };
   const bill = () => {
-    router.push('/[account_id]/menu/[table_id]/bill');
+    router.push(`/${account_id}/menu/${table_id}/bill`);
   };
   const o_purchase = () => {
-    router.push('/[account_id]/menu/[table_id]/purchase');
+    router.push(`/${account_id}/menu/${table_id}/purchase`);
   };
+  const itemoption = (title) => {
+    router.push(`/${account_id}/menu/${table_id}/${title}`);
+  };
+
+
   const handleChangeIndex = (index) => {
     setSelectedCategoryIndex(index);
   };
 
-  const [cart, setCart] = useState([]);
-  const addToCart = (productName, price) => {
-    const newItem = { name: productName, price };
-    setCart([...cart, newItem]);
-  };
-
-  const log = {};
-  const handleProductClick = (productNamemenu, price) => {
-    router.push(`/[account_id]/menu/[table_id]/${productNamemenu}`);
-    addToCart(productName, price);
-    log.append = productNamemenu;
-    console.log(log);
-  };
-
-  const aspectRatio = 4 / 3;
-  const paperWidth = 190;
+  const aspectRatio = 500 / 350;
+  const paperWidth = (550 / 2) - (16 * 2);
   const paperHeight = paperWidth / aspectRatio;
 
   useEffect(() => {
@@ -86,7 +131,8 @@ const menu = () => {
           <Button
             color="inherit"
             onClick={o_purchase}
-            sx={{ width: 80, mr: 1 }}>注文履歴
+            sx={{ width: 80, mr: 1 }}>
+            注文履歴
           </Button>
           <Button
             variant="contained"
@@ -96,7 +142,7 @@ const menu = () => {
               backgroundColor: '#f4b73f',
               boxShadow: 3,
               fontWeight: 'bold',
-              '&:hover': { backgroundColor: '#f4b73f' } // クリック時の色変更を削除
+              '&:hover': { backgroundColor: '#f4b73f' }
             }}>
             お会計
           </Button>
@@ -120,25 +166,47 @@ const menu = () => {
         {categories.map((category, index) => (
           <Container key={category} maxWidth="sm" sx={{ mt: 4, mb: 10, px: 2 }}>
             <Grid container spacing={2}>
-              {classes[category].map((subCategory) => (
-                Object.entries(menuData[category][subCategory]).map(([itemName, itemDetails], itemIndex) => (
-                  <Grid item xs={6} key={`${subCategory}-${itemName}`}>
-                    <Paper
-                      variant="outlined"
-                      onClick={() => handleProductClick(itemName, itemDetails.price)} // 商品をクリックした際にハンドラを呼び出す
+              {allMenuItems[category].map((item, itemIndex) => (
+                <Grid item xs={6} key={itemIndex} sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      width: `${paperWidth}px`,
+                      height: `${paperHeight}px`,
+                      overflow: 'hidden',
+                      boxShadow: 3,
+                      borderRadius: 2,
+                      position: 'relative',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => addToCart(item)} // アイテムをカートに追加
+                  >
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title}
+                      style={{
+                        width: '100%',
+                        height: '80%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                    {/* Centered title within the Paper */}
+                    <Typography
+                      variant="body2"
                       sx={{
-                        width: `${paperWidth}px`,
-                        height: `${paperHeight}px`,
-                        overflow: 'hidden',
-                        boxShadow: 3,
-                        borderRadius: 2,
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                        textAlign: 'center',
+                        padding: '5px',
                       }}
                     >
-                      <Typography variant="h6">{itemName}</Typography>
-                      <Typography variant="body2">価格: ¥{itemDetails.price}</Typography>
-                    </Paper>
-                  </Grid>
-                ))
+                      {item.title}
+                    </Typography>
+                  </Paper>
+                </Grid>
               ))}
             </Grid>
           </Container>
@@ -148,7 +216,7 @@ const menu = () => {
       <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, bgcolor: 'background.paper', boxShadow: 3 }}>
         <Container maxWidth="sm">
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 1 }}>
-            <Typography variant="body1">注文数</Typography>
+            <Typography variant="body1">注文数: {cartItemCount}</Typography>
             <Button
               variant="contained"
               onClick={order}
@@ -157,13 +225,14 @@ const menu = () => {
                 backgroundColor: '#f4b73f',
                 boxShadow: 3,
                 fontWeight: 'bold',
-                '&:hover': { backgroundColor: '#f4b73f' } // クリック時の色変更を削除
+                '&:hover': { backgroundColor: '#f4b73f' }
               }}>
               注文確認
             </Button>
           </Box>
         </Container>
       </Box>
+      <MenuItemComponent confirmOrder={confirmOrder} />
     </>
   );
 }
