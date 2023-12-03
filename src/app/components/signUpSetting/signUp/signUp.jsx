@@ -128,24 +128,17 @@ export default function SignUp() {
       </Grid>
       <Grid container spacing={2} sx={{display:'flex',justifyContent:'space-between',mt:3}}>
         <Grid item xs={6} sx={{display:'flex',justifyContent:'left',mt:3}}>
-          <Link href="/" variant="body2">
+          <Link href="/login" variant="body2">
             ログインはこちら
           </Link>
         </Grid>
         <Grid sx={{ display: 'flex', justifyContent: 'right',mt:3}}>
-          <Button variant='contained' onClick={() => handleInputChange('register')}>register</Button>
+          <Button variant='contained' onClick={() => handleInputChange('register')}>登録</Button>
         </Grid>
       </Grid>
       <Dialog fullWidth={true} maxWidth={'sm'} open={showDialog}>
-        <DialogTitle>登録完了</DialogTitle>
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 ,display:'flex',justifyContent:'center'}}>
-        <Button
-          variant='contained'
-          onClick={() => navigation.navigate('/[account_id]/home', { account_id: response })}
-        >
-          ホーム画面へ
-        </Button>
-        </Container>
+        <DialogTitle>アカウント登録が完了しました</DialogTitle>
+        <Button variant='contained' href={`/${response}/home`} onClick={handleClose}>ホーム画面へ</Button>
       </Dialog>
     </React.Fragment>
   );

@@ -10,29 +10,29 @@ import * as React from 'react';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton href='#'>
+    <ListItemButton href='/account_id/analyze'>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary= "DashBoard" />
     </ListItemButton>
-    <ListItemButton href='#profit'>
+    <ListItemButton href='/account_id/analyze/profit'>
       <ListItemIcon>
         <LocalAtmIcon />
       </ListItemIcon>
-      <ListItemText primary="売上の推移" />
+      <ListItemText primary="利益" />
     </ListItemButton>
-    <ListItemButton href="#sales">
+    <ListItemButton href="/account_id/analyze/sales">
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="商品別の売上" />
+      <ListItemText primary="売上" />
     </ListItemButton>
-    <ListItemButton href="#correlation">
+    <ListItemButton href="/account_id/analyze/correlation">
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="売上と商品の相関" />
+      <ListItemText primary="相関" />
     </ListItemButton>
   </React.Fragment>
 );

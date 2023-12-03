@@ -25,9 +25,9 @@ export async function POST(request, { params }) {
             const stock = new Stock(params.id);
             const stock_query = await stock.upsert(body.menu);
 
-            return NextResponse.json({ web_query: web_query, stock_query: stock_query }, { status: 500 })
+            return NextResponse.json({ web_query: web_query, stock_query: stock_query })
         }
     }catch(e){
-        return NextResponse.json({ error: e.message }, { status: 500 })
+        return NextResponse.json({ error: e.message })
     }
 };

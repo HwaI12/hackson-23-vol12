@@ -23,5 +23,4 @@ const postResponse = async (endpoint, data) => {
     }
 }
 
-
 export {getResponse, postResponse};
