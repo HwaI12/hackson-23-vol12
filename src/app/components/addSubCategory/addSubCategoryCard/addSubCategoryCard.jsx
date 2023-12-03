@@ -20,8 +20,7 @@ export default function AddSubCategoryCard(props) {
     dynamicComponent = <HeightMenu_OptionCard />;
   }
   return(
-    <Grid item md={3} >
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ width:'20vw' }}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -48,6 +47,5 @@ export default function AddSubCategoryCard(props) {
               </Grid>
             </CardContent>
       </Card>
-    </Grid>
   )
 }

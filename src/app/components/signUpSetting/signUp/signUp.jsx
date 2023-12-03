@@ -9,6 +9,8 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useState } from 'react';
 import { postResponse } from '../../../../scripts/response';
+import Container from '@mui/material/Container';
+
 
 
 export default function SignUp() {
@@ -19,6 +21,7 @@ export default function SignUp() {
   const [passwordError, setPasswordError] = useState(false);
   const [showDialog , setShowDialog] = useState(false);
   const [response, setResponse] = useState('');
+  const [account_id, setAccount_id] = useState('');
 
   const handleClose = () => {
     setShowDialog(false);
@@ -45,6 +48,7 @@ export default function SignUp() {
         if (getResponse.account_id === false) {
           alert('そのメールアドレスは登録済みです');
         }else{
+          setAccount_id(getResponse.account_id);
           setShowDialog(true);
         }
       }
