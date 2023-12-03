@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { useRouter } from 'next/navigation';
+import menuData from '../../../../scripts//menu.json';
 import {
   AppBar,
   Box,
@@ -15,43 +16,11 @@ import {
 } from '@mui/material';
 
 // Example category data
-const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'];
-
-// Example menu items for each category
-const allMenuItems = {
-  'Category 1': [
-    { title: '団子', imageUrl: '/images/dango.jpg' },
-    { title: 'パンケーキ', imageUrl: '/images/pancake.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-  ],
-  'Category 2': [
-    { title: '団子', imageUrl: '/images/dango.jpg' },
-    { title: 'パンケーキ', imageUrl: '/images/pancake.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-  ],
-  'Category 3': [
-    { title: '団子', imageUrl: '/images/dango.jpg' },
-    { title: 'パンケーキ', imageUrl: '/images/pancake.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-    { title: 'ケチャップ', imageUrl: '/images/toast.jpg' },
-  ],
-  'Category 4': [
-    { title: '団子', imageUrl: '/images/dango.jpg' },
-    { title: 'パンケーキ', imageUrl: '/images/pancake.jpg' },
-  ],
-  'Category 5': [
-    { title: '団子', imageUrl: '/images/dango.jpg' },
-    { title: 'パンケーキ', imageUrl: '/images/pancake.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-    { title: 'トースト', imageUrl: '/images/toast.jpg' },
-  ],
-};
+const categories = Object.keys(menuData);
+const classes = {};
+categories.forEach((category) => {
+  classes[category] = Object.keys(menuData[category]);
+});
 
 const menu = () => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
@@ -71,9 +40,12 @@ const menu = () => {
   const handleChangeIndex = (index) => {
     setSelectedCategoryIndex(index);
   };
+  const handleProductClick = (productNamemenu) => {
+    router.push(`/[account_id]/menu/[table_id]/${productNamemenu}`);
+  };
 
-  const aspectRatio = 500 / 350;
-  const paperWidth = (550 / 2) - (16 * 2);
+  const aspectRatio = 4 / 3;
+  const paperWidth = 190;
   const paperHeight = paperWidth / aspectRatio;
 
   useEffect(() => {
@@ -86,7 +58,6 @@ const menu = () => {
       }
     }
   }, [selectedCategoryIndex]);
-  
 
   return (
     <>
@@ -138,45 +109,25 @@ const menu = () => {
         {categories.map((category, index) => (
           <Container key={category} maxWidth="sm" sx={{ mt: 4, mb: 10, px: 2 }}>
             <Grid container spacing={2}>
-              {allMenuItems[category].map((item, itemIndex) => (
-                <Grid item xs={6} key={itemIndex} sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Paper
-                    variant="outlined"
-                    sx={{
-                      width: `${paperWidth}px`,
-                      height: `${paperHeight}px`, // Set the height of the Paper component
-                      overflow: 'hidden',
-                      boxShadow: 3,
-                      borderRadius: 2,
-                      position: 'relative', // Add position relative
-                    }}
-                  >
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title}
-                      style={{
-                        width: '100%',
-                        height: '80%', // Set the height of the image to 70%
-                        objectFit: 'cover',
-                      }}
-                    />
-                    {/* Centered title within the Paper */}
-                    <Typography
-                      variant="body2"
+              {classes[category].map((subCategory) => (
+                Object.entries(menuData[category][subCategory]).map(([itemName, itemDetails], itemIndex) => (
+                  <Grid item xs={6} key={`${subCategory}-${itemName}`}>
+                    <Paper
+                      variant="outlined"
+                      onClick={() => handleProductClick(itemName)} // 商品をクリックした際にハンドラを呼び出す
                       sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                        textAlign: 'center',
-                        padding: '5px',
+                        width: `${paperWidth}px`,
+                        height: `${paperHeight}px`,
+                        overflow: 'hidden',
+                        boxShadow: 3,
+                        borderRadius: 2,
                       }}
                     >
-                      {item.title}
-                    </Typography>
-                  </Paper>
-                </Grid>
+                      <Typography variant="h6">{itemName}</Typography>
+                      <Typography variant="body2">価格: ¥{itemDetails.price}</Typography>
+                    </Paper>
+                  </Grid>
+                ))
               ))}
             </Grid>
           </Container>

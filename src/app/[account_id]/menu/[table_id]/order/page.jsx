@@ -11,7 +11,7 @@ const order = () => {
 
   const router = useRouter();
   const menu = () => {
-    router.push('/[account_id]/menu/[table_id]');
+    router.push('/${account_id}/menu/${table_id}');
   };
 
   return (

@@ -7,14 +7,11 @@ import Button from '@mui/material/Button';
 import Menubar from '../../../../components/menubar/menubar.jsx';
 import { useRouter } from 'next/navigation';
 
-const bill = () => {
+const order = () => {
 
   const router = useRouter();
   const menu = () => {
     router.push('/[account_id]/menu/[table_id]');
-  };
-  const check = () => {
-    router.push('/[account_id]/menu/[table_id]/bill/check');
   };
 
   return (
@@ -25,14 +22,14 @@ const bill = () => {
           <Box sx={{ position: 'fixed', bottom: 30, left: 0, right: 0}}>
             <Button
               variant="contained"
-              onClick={check}
+              onClick={menu}
               sx={{
                 width: 350,
                 backgroundColor: '#f4b73f',
                 boxShadow: 3,
                 '&:hover': { backgroundColor: '#f4b73f' } // クリック時の色変更を削除
               }}>
-              お会計へ進む
+              ねむいよおおおおおお
             </Button>
           </Box>
         </CardContent>
@@ -41,4 +38,4 @@ const bill = () => {
   );
 };
 
-export default bill;
+export default order;
