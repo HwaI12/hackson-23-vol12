@@ -1,5 +1,3 @@
-import productNamemenu from '../app/[account_id]/menu/[table_id]/page';
-
 const fs = require('fs');
 const menuData = require('./menu.json'); // Adjust the path as needed
 
@@ -27,7 +25,7 @@ function handler(productName) {
   return productOptions;
 }
 
-const productName = productNamemenu; // Replace with the actual product name
+const productName = 'コカコーラ'; // Replace with the actual product name
 const options = handler(productName);
 console.log('Found options:', options);
 

@@ -29,10 +29,10 @@ const menu = () => {
   const router = useRouter();
 
   const order = () => {
-    router.push('/[account_id]/menu/[table_id]/order'); 
+    router.push('/[account_id]/menu/[table_id]/order');
   };
   const bill = () => {
-    router.push('/[account_id]/menu/[table_id]/bill'); 
+    router.push('/[account_id]/menu/[table_id]/bill');
   };
   const o_purchase = () => {
     router.push('/[account_id]/menu/[table_id]/purchase');
@@ -40,8 +40,19 @@ const menu = () => {
   const handleChangeIndex = (index) => {
     setSelectedCategoryIndex(index);
   };
-  const handleProductClick = (productNamemenu) => {
+
+  const [cart, setCart] = useState([]);
+  const addToCart = (productName, price) => {
+    const newItem = { name: productName, price };
+    setCart([...cart, newItem]);
+  };
+
+  const log = {};
+  const handleProductClick = (productNamemenu, price) => {
     router.push(`/[account_id]/menu/[table_id]/${productNamemenu}`);
+    addToCart(productName, price);
+    log.append = productNamemenu;
+    console.log(log);
   };
 
   const aspectRatio = 4 / 3;
@@ -74,12 +85,12 @@ const menu = () => {
           </Box>
           <Button
             color="inherit"
-            onClick = {o_purchase}
+            onClick={o_purchase}
             sx={{ width: 80, mr: 1 }}>注文履歴
           </Button>
           <Button
             variant="contained"
-            onClick = {bill}
+            onClick={bill}
             sx={{
               width: 80,
               backgroundColor: '#f4b73f',
@@ -114,7 +125,7 @@ const menu = () => {
                   <Grid item xs={6} key={`${subCategory}-${itemName}`}>
                     <Paper
                       variant="outlined"
-                      onClick={() => handleProductClick(itemName)} // 商品をクリックした際にハンドラを呼び出す
+                      onClick={() => handleProductClick(itemName, itemDetails.price)} // 商品をクリックした際にハンドラを呼び出す
                       sx={{
                         width: `${paperWidth}px`,
                         height: `${paperHeight}px`,
