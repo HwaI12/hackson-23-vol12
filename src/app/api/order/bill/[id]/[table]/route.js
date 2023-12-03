@@ -16,8 +16,8 @@ export async function GET(request, {params}) {
         const order = new Order(params.id);
         const query = await order.reset_table(params.table)
         
-        return NextResponse.json(query, { status: 500 });
+        return NextResponse.json(query);
     } catch (e) {
-        return NextResponse.json({ error: e.message }, { status: 500 });
+        return NextResponse.json({ error: e.message });
     }
 }

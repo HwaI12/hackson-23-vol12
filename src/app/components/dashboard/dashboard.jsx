@@ -13,6 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import * as React from 'react';
+import Correleation from '../correlation/correlation.jsx';
 import { mainListItems } from '../listItems/listItems.jsx';
 import Profit from '../profit/profit.jsx';
 import Sales from '../sales/sales.jsx';
@@ -146,6 +147,25 @@ export default function Dashboard() {
                     売上と商品の相関
                   </Typography>
                   <Correl/>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12} lg={12}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '50vh',
+                  }}
+                >
+                  <Typography variant="h6" component="h2" gutterBottom>
+                    売上と注文の相関
+                  </Typography>
+                  <Correleation/>
                 </Paper>
               </Grid>
             </Grid>
